@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shopify Test App</title>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/angular.js"></script>
+	<script src="/js/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body ng-app="shopifyApp">
+	<h1>Shopify Test App</h1>
+	<div ng-controller="MainController">
+		<ul class="products">
+			<li ng-repeat="product in products">
+				<img src="{{product.image.src}}" alt="{{product.title}}" />
+				<div>{{product.title}}</div>
+				<label class="compare-to" ng-show="{{product.variants[0].compare_at_price}}"> $ {{product.variants[0].compare_at_price}}</label>
+				<label>$ {{product.variants[0].price}}</label>
+				<div>
+					<button ng-click="buy(product.variants[0].product_id)"> BUY </button>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
