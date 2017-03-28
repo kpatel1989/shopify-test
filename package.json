@@ -25,6 +25,8 @@
     "express": "^4.13.3",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
-    "shopify-api-node": "^2.4.0"
+    "node-shopify-auth": "^1.0.13",
+    "shopify-api-node": "^2.4.0",
+    "shopify-node-api": "^1.7.6"
   }
 }

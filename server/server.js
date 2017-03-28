@@ -26,13 +26,27 @@ function start() {
         res.send("Done");
     });
 
-    app.post("/product/buy/:productId", function(req,res) {
-        var productId = req.params.productId;
-        console.log("Product to buy = " + productId);
+    app.post("/product/buy", function(req,res) {
+        console.log("Product to buy = ", req.body);
+        shopify.draftOrder(req.body)
+            .then(data => res.send(data), err => res.send(err));
     });
+
+    app.get("/shopify",function(req,res) {
+        res.redirect(shopify.authUrl);
+    });
+
+    app.all("/shopify/auth", function(req,res){
+        console.log("Auth Response received",req);
+    })
+
+   app.all("/shopify/auth-failed", function(req,res){
+        console.log("Auth Response failed",req);
+    })
 
     var server = app.listen(5000, function () {
         console.log('Server running on http://localhost:5000');
+        // shopify.authenticateShopify();
     });
 }
 
