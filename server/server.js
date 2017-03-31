@@ -32,6 +32,12 @@ function start() {
             .then(data => res.send(data), err => res.send(err));
     });
 
+    app.post("/product/addInventory", function(req,res) {
+        console.log("Inventory to add = ", req.body);
+        shopify.addInventory(req.body)
+            .then(data => res.send(data), err => res.send(err));
+    });
+
     app.get("/shopify",function(req,res) {
         res.redirect(shopify.authUrl);
     });
@@ -50,4 +56,4 @@ function start() {
     });
 }
 
-exports.start = start;
+exports.start = start;  

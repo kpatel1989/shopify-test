@@ -16,6 +16,7 @@ ul.products li {
     display: inline-block;
     width: 200px;
     text-align: center;
+    vertical-align: top;
 }
 
 ul.products li img {

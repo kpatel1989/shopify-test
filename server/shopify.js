@@ -19,12 +19,12 @@ shopifyAuth = new shopifyAPI({
 	shop: shopName, // MYSHOP.myshopify.com 
 	shopify_api_key: apiKey, // Your API key 
 	shopify_shared_secret: sharedSecret, // Your Shared Secret 
-	shopify_scope: "read_products, read_draft_orders, write_draft_orders",
-	redirect_uri: 'http://localhost:3000/shopify/auth',
+	shopify_scope: "read_products,read_draft_orders,write_draft_orders",
+	redirect_uri: 'http://localhost:5000/shopify/auth',
 	nonce: '12345780' // you must provide a randomly selected value unique for each authorization request 
 });
 var auth_url = shopifyAuth.buildAuthURL();
-
+console.log(auth_url);
 
 var pullCollection = function() {
 	console.log("Pulling Data from shopify");
@@ -32,6 +32,17 @@ var pullCollection = function() {
 		.then(saveProductsToDB)
         .catch(err => console.error(err));
 
+}
+
+var addInventory = function(variantDetails) {
+	return new Promise(function(resolve, reject) {
+		var params = {
+			id : variantDetails.variantId,
+			inventory_quantity_adjustment : variantDetails.quantity
+		};
+		shopify.productVariant.update(params.id,params)
+      		.then(data => resolve(data), err => reject(err));
+    });
 }
 
 var draftOrder = function(orderDetails) {
@@ -64,6 +75,7 @@ var getProducts = function() {
 var clearCollection = function() {
 	db.clearProductCollection();
 }
+exports.addInventory = addInventory;
 exports.draftOrder = draftOrder;
 exports.pullCollection = pullCollection;
 exports.getProducts = getProducts;

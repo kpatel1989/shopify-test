@@ -19,6 +19,16 @@
 				<div>
 					<button ng-click="buy(product.variants[0].id)"> BUY </button>
 				</div>
+				<hr/>
+				<div>
+					Inventory : {{product.variants[0].inventory_quantity}}
+					<button ng-click="showUpdateBox = true"> Update </button>
+				</div>
+				<div ng-show="showUpdateBox">
+					<input type="number" ng-model="product.variants[0].updateStockQty"/>
+					<button ng-click="update(product.variants[0])"> Add </button>
+				</div>
+
 			</li>
 		</ul>
 	</div>
