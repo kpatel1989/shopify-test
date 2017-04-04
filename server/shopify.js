@@ -26,10 +26,13 @@ shopifyAuth = new shopifyAPI({
 var auth_url = shopifyAuth.buildAuthURL();
 console.log(auth_url);
 
-var pullCollection = function() {
+var pullCollection = function(callback) {
 	console.log("Pulling Data from shopify");
 	shopify.product.list()
-		.then(saveProductsToDB)
+		.then(products => {
+			saveProductsToDB(products);
+			callback(products);
+		})
         .catch(err => console.error(err));
 
 }

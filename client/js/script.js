@@ -12,9 +12,9 @@ shopifyApp.controller('MainController', ['$http','$scope',
 				quantity: 1,
 				discount : 0.25
 			})
-				.then(function(res){
-					console.log(res.data);
-				});
+			.then(function(res){
+				console.log(res.data);
+			});
 		}
 		$scope.update = function(variant) {
 			$http.post("/product/addInventory",{

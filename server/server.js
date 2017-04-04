@@ -15,15 +15,16 @@ function start() {
     app.get("/", function (req, res) {
         res.sendFile(global.CLIENT_PATH + '/index.html');
     });
-
+    
     app.get("/products",function(req,res){
         shopify.getProducts().then(products => res.send(products), error => console.log(error));
     });
 
     app.get("/products/download",function(req,res){
         shopify.clearCollection();
-        shopify.pullCollection();
-        res.send("Done");
+        shopify.pullCollection(() => {
+            res.send("Done");
+        });
     });
 
     app.post("/product/buy", function(req,res) {
@@ -35,7 +36,12 @@ function start() {
     app.post("/product/addInventory", function(req,res) {
         console.log("Inventory to add = ", req.body);
         shopify.addInventory(req.body)
-            .then(data => res.send(data), err => res.send(err));
+            .then(data => {
+                shopify.clearCollection();
+                shopify.pullCollection(() => {
+                    res.send(data);
+                });
+            }, err => res.send(err));
     });
 
     app.get("/shopify",function(req,res) {
